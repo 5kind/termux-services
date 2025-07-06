@@ -1,4 +1,4 @@
-<h1 align="center">Magisk Module Template Extended (MMT-Ex)</h1>
+<h1 align="center">Magisk Module Template Extended (termux-services)</h1>
 
 <div align="center">
   <!-- Version -->
@@ -16,16 +16,16 @@
 
 <div align="center">
   <strong>MMT Extended is the spiritual successor of Unity and makes magisk module creation easy. Instructions in the 
-    <h3><a href="https://github.com/Zackptg5/MMT-Extended/wiki">Wiki</a></h3><h4>Also supports KSU</h4>
+    <h3><a href="https://github.com/Zackptg5/termux-servicestended/wiki">Wiki</a></h3><h4>Also supports KSU</h4>
 </div>
 
 <div align="center">
   <h3>
-    <a href="https://github.com/Zackptg5/MMT-Extended">
+    <a href="https://github.com/Zackptg5/termux-servicestended">
       Source Code
     </a>
     <span> | </span>
-    <a href="https://github.com/Zackptg5/MMT-Extended-Addons">
+    <a href="https://github.com/Zackptg5/termux-servicestended-Addons">
       Addons Repository
     </a>
     <span> | </span>
@@ -37,4 +37,4 @@
 
 ### Usage
 - [Follow the directions here (DO NOT FORK)](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template)
-- Then follow instructions in [Wiki](https://github.com/Zackptg5/MMT-Extended/wiki)
+- Then follow instructions in [Wiki](https://github.com/Zackptg5/termux-servicestended/wiki)
