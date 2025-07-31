@@ -1,6 +1,6 @@
 id=termux-services
 name=Termux Services
-version=v0.1.1
+version=v0.1.2
 versionCode=13
 author=5kind
 description=Termux Services
