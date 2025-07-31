@@ -1,3 +1,5 @@
+MODDIR=${0%/*}
+MODID=${MODDIR##*/}
 for SCRIPT in "$MODDIR/system/bin"/* "$MODDIR/system/etc/rc.local"; do
     set_perm "$SCRIPT" 0 0 0755
 done
