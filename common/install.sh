@@ -1,8 +1,4 @@
-for SCRIPT in "$MODPATH/system/bin"/* "$MODPATH/system/etc/rc.local"; do
-    set_perm "$SCRIPT" 0 0 0755
-done
-
-cp -r "$MODPATH/common/$MODID" /data/adb
+cp -r -n "$MODPATH/common/$MODID" /data/adb
 chmod +x "/data/adb/$MODID/svlogger"
 
 [ -d /data/data/com.termux/files/usr ] && \
