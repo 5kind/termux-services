@@ -2,6 +2,7 @@
 SRC_DIR="/etc/sv"
 # All service in $SRC_DIR will be copied to $SVDIR, which is the
 # destination directory for runsvdir to run services.
+[ ! -e /data/adb/service ] && mkdir -p /data/adb/service
 for svc in $SRC_DIR/*; do
     service="${svc##*/}"
     if [ -d "$svc" ] && [ ! -e "$SVDIR/$service" ]; then
