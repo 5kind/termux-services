@@ -1,7 +1,7 @@
 id=termux-services
 name=Termux Services
 version=v0.1.1
-versionCode=7
+versionCode=9
 author=5kind
 description=Termux Services
 updateJson=https://raw.githubusercontent.com/5kind/termux-services/master/update.json
