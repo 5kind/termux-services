@@ -1,3 +1,4 @@
+[ -f "/data/adb/termux-services/remove" ] && rm -rf "/data/adb/termux-services"
 # Don't modify anything after this
 if [ -f $INFO ]; then
   while read LINE; do

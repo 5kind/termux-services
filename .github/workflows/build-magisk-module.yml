@@ -210,7 +210,7 @@ jobs:
           if [ -f ".zipignore" ]; then zip_exclude_args+=("-x@.zipignore"); fi
           # Package all module-related files into install.zip
           echo "Running zip command with exclusions: ${zip_exclude_args[@]}"
-          zip -r install.zip . ${zip_exclude_args[@]}
+          zip -r -y install.zip . ${zip_exclude_args[@]}
 
       # Step 8: Create GitHub Release and upload install.zip
       - name: Create GitHub Release
