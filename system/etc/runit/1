@@ -6,15 +6,15 @@
 # It is used to initialize the Termux Services environment.
 # Will be sourced by the post-fs-data script in the Modules directory.
 
-. /etc/runit/functions
+. "$MODPATH/system/etc/runit/functions"
 
 msg1 "${0##*/}:$(uptime)"
 msg "Welcome to Termux Services!"
 
 # Start core services: one-time system tasks.
 msg_log "Starting core services..."
-for f in /etc/runit/core-services/*.sh; do
-        [ -r $f ] && . $f
+for f in "$MODPATH/system/etc/runit/core-services/"*.sh; do
+        [ -r "$f" ] && . "$f"
 done
 
 msg "Initialization complete, running stage 2..."
