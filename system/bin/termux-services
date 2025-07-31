@@ -1,0 +1,113 @@
+#!/bin/sh
+
+now_flag=false
+process_list=""
+follow_flag=false
+
+. /etc/runit/functions
+
+command -v sv >/dev/null 2>&1 || msg_die "The 'sv' command is not available. Please install runit."
+
+if [ -z $SVDIR ] || [ -z $LOGDIR ]; then
+    [ -f /etc/rc.conf ] && . /etc/rc.conf
+fi
+
+show_help() {
+    cat <<EOF
+Usage: ${0##*/} [-v] [-w sec] command [arg] service ...
+This script forwards commands to the \`sv\` command.
+
+Commands:
+    -h, --help, help
+        Show this help message and sv help.
+    enable [--now] <svc>
+        Enable a service (and start it immediately if --now is specified).
+    disable [--now] <svc>
+        Disable a service (and stop it immediately if --now is specified).
+    log|logs [-f|-F|--follow] <svc>
+        Show the log of a service (follow the log file if -f, -F, or --follow is specified).
+    *   Forward all other commands to \`sv\`.
+EOF
+    sv help
+    out "For more information, see: sv(8)"
+}
+
+enable(){
+    for arg in "$@"; do
+        if [ "$arg" = "--now" ]; then
+            now_flag=true
+            continue
+        fi
+        if [ -d "$SVDIR/$arg" ]; then
+            rm -f "$SVDIR/$arg/down"
+            process_list="$process_list $arg"
+        else
+            msg_error "Service '$arg' does not exist."
+        fi
+    done
+}
+
+disable(){
+    for arg in "$@"; do
+        if [ "$arg" = "--now" ]; then
+            now_flag=true
+            continue
+        fi
+        if [ -d "$SVDIR/$arg" ]; then
+            touch "$SVDIR/$arg/down"
+        else
+            msg_error "Service '$arg' does not exist."
+        fi
+    done
+}
+
+logs(){
+    for arg in "$@"; do
+        if [ "$arg" = "-f" ] || [ "$arg" = "-F" ] || [ "$arg" = "--follow" ]; then
+            follow_flag=true
+            continue
+        fi
+        if [ -f "$LOGDIR/sv/$arg/current" ]; then
+            process_list="$process_list $LOGDIR/sv/$arg/current"
+        else
+            msg_error "Log file for service '$arg' not found."
+        fi
+    done
+}
+
+case "$1" in
+    -h|--help|help)
+        show_help
+        exit 0
+        ;;
+    enable)
+        shift
+        enable "$@"
+        if $now_flag; then
+            sv up $process_list
+        fi
+        ;;
+    disable)
+        shift
+        disable "$@"
+        if $now_flag; then
+            sv down $process_list
+        fi
+        ;;
+    log|logs)
+        shift
+        logs "$@"
+        if $follow_flag; then
+            tail -F $process_list
+        else
+            less $process_list
+        fi
+        ;;
+    *)
+        if [ -z "$1" ]; then
+            show_help
+            exit 1
+        fi
+        sv "$@"
+        ;;
+esac

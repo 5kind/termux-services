@@ -1,0 +1,33 @@
+#!/bin/sh
+# vim: set ts=4 sw=4 et:
+#
+# Default /etc/rc.local for Termux services.
+#
+# This is source by runit in stage 2 (service mode)
+# before the runit services are executed.(see /etc/runit/2).
+
+# Decrypt or wait for the locksettings to be verified.
+# This script is run before the Termux services start.
+
+. /etc/runit/functions
+[ -f /etc/rc.conf ] && . /etc/rc.conf
+
+ensure_exist() {
+    local folder="$1"
+    while [ ! -e "$folder" ]; do
+        sleep 1
+    done
+}
+
+if [ -n "$PASSWORD" ]; then
+    locksettings verify --old "$PASSWORD"
+fi
+
+ensure_exist /sdcard/Android
+
+if test -d /etc/rc.local.d; then
+    for script in /etc/rc.local.d/*.rc /etc/rc.local.d/*.sh; do
+        test -r "$script" && . "$script"
+    done
+    unset script
+fi

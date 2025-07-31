@@ -1,0 +1,24 @@
+# *-*-shell-*-*
+# vim: set ts=4 sw=4 et:
+# /etc/runit/functions
+# Systemless Termux Services Built-in Functions
+out() { printf "${@}\n"; }
+msg() { out "=> $@"; }
+msg1() { out " -- $@ -- "; }
+
+msg_ok() { out " OK"; }
+msg_error() { out "ERROR: $@" 1>&2; }
+msg_warn() { out "WARNING: $@" 1>&2; }
+msg_die() { msg_error "$@"; exit 1; }
+msg_log() { out "$(date +'%b %d %T') $(hostname) $(basename ${0})[$$]: $@"; }
+
+exec_cmd() {
+  # 1. Check for the standard command existence.
+  if command -v "$1" >/dev/null 2>&1; then
+    local cmd="$1"; shift
+    exec "$cmd" "$@"
+  # 2. If not found, use busybox as a fallback.
+  else
+    exec busybox "$@"
+  fi
+}

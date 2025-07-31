@@ -1,0 +1,77 @@
+#!/bin/sh
+
+set -e
+
+[ -f /etc/rc.conf ] && . /etc/rc.conf
+
+start(){
+    if [ ! -x $PREFIX/bin/runsvdir ]; then
+        legacy_start
+        return
+    fi
+    mkdir -p $PIDDIR
+    start-stop-daemon -S -b -m -p $PIDFILE -x $DAEMON -d $PREFIX -- $DAEMON_OPTS
+}
+
+stop(){
+    if [ ! -x $PREFIX/bin/runsvdir ]; then
+        legacy_stop
+        return
+    fi
+    start-stop-daemon -K -s 1 -o -p $PIDFILE
+    tail -f --pid=`cat $PIDFILE` /dev/null
+    for f in $SVDIR/*/supervise $SVDIR/*/log/supervise;do
+        kill -9 `cat $f/pid` 2>/dev/null ||:
+        rm -rf $f/*
+    done
+}
+
+legacy_start(){
+    for svc in $SVDIR/*; do
+        [ -L "$svc/supervise" ] && mkdir -p $(readlink -f "$svc/supervise")
+        [ -L "$svc/log/supervise" ] && mkdir -p $(readlink -f "$svc/log/supervise")
+        [ ! -e "$svc/down" ] && [ -d "$svc" ] && busybox svc -u "$svc"
+    done
+}
+
+legacy_stop(){
+    for svc in $SVDIR/*; do
+        busybox svc -d "$svc"
+    done
+    for f in $SVDIR/*/supervise $SVDIR/*/log/supervise; do
+        kill -9 `cat $f/pid` 2>/dev/null ||:
+        rm -rf $f/*
+    done
+}
+# Must be a valid filename
+NAME=termux-service-daemon
+PIDDIR=$RUNDIR
+PIDFILE=$PIDDIR/$NAME.pid
+#This is the command to be run, give the full pathname
+DAEMON=$PREFIX/bin/runsvdir
+DAEMON_OPTS="$SVDIR"
+
+case "$1" in
+    start)
+        echo -n "Starting daemon: "$NAME
+        start
+        echo "."
+        ;;
+    stop)
+        echo -n "Stopping daemon: "$NAME
+        stop
+        echo "."
+        ;;
+    restart)
+        echo -n "Restarting daemon: "$NAME
+        stop
+        start
+        echo "."
+        ;;
+
+    *)
+        echo "Usage: "$1" {start|stop|restart}"
+        exit 1
+esac
+
+exit 0

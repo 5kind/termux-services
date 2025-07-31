@@ -1,0 +1,20 @@
+# *-*-shell-*-*
+# vim: set ts=4 sw=4 et:
+#
+# This script is a modified version of the /etc/runit/1 found on
+# Void Linux systems (licensed LGPL-2.1-or-later).
+# It is used to initialize the Termux Services environment.
+# Will be sourced by the post-fs-data script in the Modules directory.
+
+. /etc/runit/functions
+
+msg1 "${0##*/}:$(uptime)"
+msg "Welcome to Termux Services!"
+
+# Start core services: one-time system tasks.
+msg_log "Starting core services..."
+for f in /etc/runit/core-services/*.sh; do
+        [ -r $f ] && . $f
+done
+
+msg "Initialization complete, running stage 2..."

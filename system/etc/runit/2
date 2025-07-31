@@ -1,0 +1,13 @@
+# *-*-shell-*-*
+# vim: set ts=4 sw=4 et:
+
+. /etc/runit/functions
+msg1 "${0##*/}:$(uptime)"
+msg "Waiting for Android system to complete boot..."
+resetprop -w sys.boot_completed 0
+
+[ -x /etc/rc.local ] && /etc/rc.local
+
+msg "Starting runit service management..."
+termux-service-daemon start
+msg1 "End:$(uptime)"
