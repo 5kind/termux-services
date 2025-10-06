@@ -1,15 +1,7 @@
 TERMUX_SOCKET=/dev/socket/termux
 
-clone_attr() {
-    local src=$1
-    local dest=$2
-    shift 2
-    local opts=$@
-    chcon --reference=$src $dest $opts
-    chown $(stat -c "%U:%G" $src) $dest $opts
-}
-
 setup_tmpfs() {
+    msg "Setting up tmpfs in $TERMUX_SOCKET..."
     # setup tmpfs in /dev/socket/termux
     mkdir -p "$TERMUX_SOCKET"
     mkdir -m 1777 "$TERMUX_SOCKET/tmp" "$TERMUX_SOCKET/tmp/.X11-unix"

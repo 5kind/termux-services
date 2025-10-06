@@ -5,6 +5,16 @@
 # It is recommended to symlink /etc/fstab to $PREFIX/etc/fstab to ensure compatibility
 # with mount utilities such as toybox, busybox, and Termux's own tools.
 
+generate_fstab() {
+    # Generate $PREFIX/etc/fstab if it does not exist(service.sh).
+    [ ! -e "$PREFIX/etc/fstab" ] && _genfstab > "$PREFIX/etc/fstab"
+    clone_attr "$PREFIX" "$PREFIX/etc/fstab"
+}
+
+_genfstab(){
+    echo "# <file system> <mount point>   <type>  <options>       <dump>  <pass>"
+}
+
 mount_filesystems() {
     if [ ! -e /etc/fstab ]; then
         msg_warn "No /etc/fstab found, skipping mount point creation & mounting."
@@ -25,7 +35,7 @@ mount_filesystems() {
     done
 
     mount -v -a -t "nosysfs,nonfs,nonfs4,nosmbfs,nocifs" -O no_netdev
-    msg "Finished processing /etc/fstab."
 }
 
+$GEN_FSTAB && generate_fstab
 mount_filesystems

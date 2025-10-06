@@ -7,6 +7,8 @@
 # Will be sourced by the post-fs-data script in the Modules directory.
 
 . "$MODPATH/system/etc/runit/functions"
+# Note: Only /data/adb/*/rc.conf will be loaded here.
+load "$MODPATH/system/etc/rc.conf"
 
 msg1 "${0##*/}:$(uptime)"
 msg "Welcome to Termux Services!"
@@ -14,7 +16,7 @@ msg "Welcome to Termux Services!"
 # Start core services: one-time system tasks.
 msg_log "Starting core services..."
 for f in "$MODPATH/system/etc/runit/core-services/"*.sh; do
-        [ -r "$f" ] && . "$f"
+        load "$f"
 done
 
 msg "Initialization complete, running stage 2..."

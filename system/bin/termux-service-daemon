@@ -2,7 +2,8 @@
 
 set -e
 
-[ -f /etc/rc.conf ] && . /etc/rc.conf
+[ -f /etc/runit/functions ] && . /etc/runit/functions
+load /etc/rc.conf
 
 start(){
     if [ ! -x $PREFIX/bin/runsvdir ]; then

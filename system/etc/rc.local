@@ -9,10 +9,11 @@
 # Decrypt or wait for the locksettings to be verified.
 # This script is run before the Termux services start.
 
-. /etc/runit/functions
-[ -f /etc/rc.conf ] && . /etc/rc.conf
+# service: Wait for Android system to complete boot.
+load /data/adb/termux-services/rc.conf
 
 ensure_exist() {
+    msg "Ensuring existence of $1..."
     local folder="$1"
     while [ ! -e "$folder" ]; do
         sleep 1
@@ -25,9 +26,12 @@ fi
 
 ensure_exist /sdcard/Android
 
+# boot-completed: /etc/rc.local.d/*.{rc,sh}
+load /etc/rc.conf
+
 if test -d /etc/rc.local.d; then
     for script in /etc/rc.local.d/*.rc /etc/rc.local.d/*.sh; do
-        test -r "$script" && . "$script"
+        load "$script"
     done
     unset script
 fi

@@ -2,4 +2,4 @@
 . /etc/runit/functions
 [ -r conf ] && . ./conf
 [ -d "$CRONDIR" ] || mkdir -p "$CRONDIR"
-exec_cmd crond -c "$CRONDIR" -f
+busybox crond -c "$CRONDIR" -f 2>&1
