@@ -2,10 +2,10 @@
 
 <div align="center">
   <!-- Version -->
-    <img src="https://img.shields.io/badge/Version-v0.1-blue.svg?longCache=true&style=popout-square"
+    <img src="https://img.shields.io/badge/Version-v0.2-blue.svg?longCache=true&style=popout-square"
       alt="Version" />
   <!-- Last Updated -->
-    <img src="https://img.shields.io/badge/Updated-2025.07.31-green.svg?longCache=true&style=flat-square"
+    <img src="https://img.shields.io/badge/Updated-2025/10/06-green.svg?longCache=true&style=flat-square"
       alt="_time_stamp_" />
   <!-- Min Magisk -->
     <img src="https://img.shields.io/badge/MinMagisk-27.0-red.svg?longCache=true&style=flat-square"
@@ -36,8 +36,8 @@
 ### Features
 #### Modify config in the [rc.conf](/data/adb/termux-services/rc.conf) to customize the behavior of the service.
 1. Modify `PASSWORD` to automatically decrypt /data partitions;  
-2. Modify `RUNDIR` to customize the run folder;
-3. Modify `SETUP_TMPFS`/`WAKE_LOCK` to enable/disable setup-tmpfs/wake-lock.
+2. Modify `PREFIX` `RUNDIR` to customize the binary/run folder;  
+3. Modify `SETUP_TMPFS`/`GEN_FSTAB`/`WAKE_LOCK` to enable/disable setup-tmpfs/generate_fstab/wake-lock.
 #### Termux Fstab Support
 - Provide [Termux fstab](/data/data/com.termux/files/usr/etc/fstab) support.
 #### Build-in Services
