@@ -42,6 +42,7 @@
 - Provide [Termux fstab](/data/data/com.termux/files/usr/etc/fstab) support.
 #### Build-in Services
 - `crond`: By default, use /data/adb/cron as the cron directory.
+- `sshd`: Use Termux sshd to provide ssh service for root.
 #### Setup your service directory to `/etc/sv` to register a service.
 1. All services in `/etc/sv` will be copied to `/data/adb/service` when `termux-services` is running.
 2. All services in `/data/adb/service` except `down` will be running when `termux-services` is running.
