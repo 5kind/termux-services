@@ -1,0 +1,7 @@
+PREFIX=/data/data/com.termux/files/usr
+ROOT_HOME=$TERMUX_HOME/.suroot
+RUNDIR_EMPTY=/debug_ramdisk/empty
+SSH_CONFIG_DIR=/data/adb/ssh
+SSHD_CONFIG_FILE=$SSH_CONFIG_DIR/sshd_config
+SSHD_CONFIG_DIR=$SSHD_CONFIG_FILE.d
+AUTHORIZED_KEYS_FILE=.ssh/authorized_keys
