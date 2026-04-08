@@ -1,3 +1,6 @@
+### v0.3.0 - 2026.04.08
+* Update run directory paths for sshd service
+
 ### v0.1.1 - 2025.07.31
 * Add termux services support and runit service scripts
 

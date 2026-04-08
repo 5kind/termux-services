@@ -2,7 +2,7 @@
 
 <div align="center">
   <!-- Version -->
-    <img src="https://img.shields.io/badge/Version-v0.2-blue.svg?longCache=true&style=popout-square"
+    <img src="https://img.shields.io/badge/Version-v0.3-blue.svg?longCache=true&style=popout-square"
       alt="Version" />
   <!-- Last Updated -->
     <img src="https://img.shields.io/badge/Updated-2025/10/06-green.svg?longCache=true&style=flat-square"
