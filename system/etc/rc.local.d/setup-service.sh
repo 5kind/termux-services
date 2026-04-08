@@ -8,9 +8,10 @@ for svc in $SRC_DIR/*; do
     service="${svc##*/}"
     if [ -d "$svc" ] && [ ! -e "$SVDIR/$service" ]; then
         cp -r "$svc" "$SVDIR/$service"
-        chmod +x "$SVDIR/$service/*"
-        [ -d "$SVDIR/$service/log" ] &&
-        chmod +x "$SVDIR/$service/log/*"
+        chmod +x "$SVDIR/$service/run"
+        [ -e "$SVDIR/$service/log/run" ] &&
+        chmod +x "$SVDIR/$service/log/run" ||
+        install -Dm755 /data/adb/termux-services/svlogger "$SVDIR/$service/log/run"
     fi
 done
 runlevel=default

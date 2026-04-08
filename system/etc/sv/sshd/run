@@ -21,7 +21,7 @@ EOF
 }
 
 # Generate ssh necessary files and directories
-[ ! -d "$RUNDIR_EMPTY" ] && mkdir -p "$RUNDIR_EMPTY" && chmod 755 "$RUNDIR_EMPTY"
+[ ! -d "$EMPTY_DIR" ] && mkdir -p "$EMPTY_DIR" && chmod 755 "$EMPTY_DIR"
 
 if [ ! -e "$SSH_CONFIG_DIR" ]; then
     mkdir -p "$SSHD_CONFIG_DIR"
@@ -36,7 +36,7 @@ fi
 # Run sshd
 if command -v sshd >/dev/null 2>&1; then
     exec unshare -m sh -c "
-        mount --bind $RUNDIR_EMPTY $TERMUX_EMPTY
+        mount --bind $EMPTY_DIR $TERMUX_EMPTY
         mount --bind $ROOT_HOME $TERMUX_HOME
         exec sshd -D -f $SSHD_CONFIG_FILE -e
     " 2>&1
