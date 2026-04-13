@@ -9,6 +9,8 @@ for svc in $SRC_DIR/*; do
     if [ -d "$svc" ] && [ ! -e "$SVDIR/$service" ]; then
         cp -r "$svc" "$SVDIR/$service"
         chmod +x "$SVDIR/$service/"*
+        ln -sf "$svc"/run "$SVDIR/$service/run"
+        [ -f "$svc/finish" ] && ln -sf "$svc"/finish "$SVDIR/$service/finish"
         [ -d "$SVDIR/$service/log" ] &&
         chmod +x "$SVDIR/$service/log/"* ||
         install -Dm755 /data/adb/termux-services/svlogger "$SVDIR/$service/log/run"

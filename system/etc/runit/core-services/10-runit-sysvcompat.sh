@@ -8,6 +8,7 @@ for svc in $SVDIR/* /data/adb/modules/*/system/etc/sv/*; do
     service="${svc##*/}"
     if [ ! -L "$service" ]; then
         ln -svf "$PREFIX/bin/sv" "$service"
+        chmod +x "$svc"/*
     fi
 done
 cd -

@@ -9,6 +9,7 @@
 . "$MODPATH/system/etc/runit/functions"
 # Note: Only /data/adb/*/rc.conf will be loaded here.
 load "$MODPATH/system/etc/rc.conf"
+load "$MODPATH/system/etc/profile.d/runit.sh"
 
 msg1 "${0##*/}:$(uptime)"
 msg "Welcome to Termux Services!"
