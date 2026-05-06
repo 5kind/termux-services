@@ -4,11 +4,11 @@
 msg "Setting up SysV compatibility..."
 mkdir -p $MODPATH/system/etc/init.d
 cd $MODPATH/system/etc/init.d
-for svc in $SVDIR/* /data/adb/modules/*/system/etc/sv/*; do
+for svc in $SVDIR/* /data/adb/modules/*/system/etc/sv/* /data/adb/modules_update/*/system/etc/sv/*; do
     service="${svc##*/}"
+    chmod +x "$svc"/*
     if [ ! -L "$service" ]; then
         ln -svf "$PREFIX/bin/sv" "$service"
-        chmod +x "$svc"/*
     fi
 done
 cd -
